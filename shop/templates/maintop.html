@@ -27,7 +27,12 @@
                 <div class="our-link">
                     <ul>
                         <li>
-                            <a href="{% url 'my-account' %}"><i class="fa fa-user s_color"></i> My Account</a>
+                            <a href=" {% if user.is_authenticated %} 
+                                       {% url 'accounts' %}
+                                      {% else %}
+                                       {% url 'login'%}
+                                        {% endif %}
+                                    "><i class="fa fa-user s_color"></i> My Account</a>
                         </li>
                         <li>
                             <a href="#"><i class="fas fa-location-arrow"></i> Our location</a>
@@ -38,19 +43,34 @@
                     </ul>
                 </div>
             </div>
+            {% if user.is_authenticated %}
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="login-box">
+            <a class="nav-link" href="{% url 'logoutaccount' %}">
+            Logout 
+            </a>
+            </div>
+            </div>
+            {% else %}
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
                     <select id="basic"
                             class="selectpicker show-tick form-control"
-                            data-placeholder="Sign In">
-                        <option>
+                            data-placeholder="Sign Up"
+                            onchange="location = this.value;">
+                       <option value="#">
+                            Login or Register
+                        </option>
+                        <option value="{% url 'register'%}">
                             Register Here
                         </option>
-                        <option>
+                        <option value="{% url 'login'%}">
                             Sign In
                         </option>
                     </select>
                 </div>
+            </div>
+            {% endif %}
                 <div class="text-slid-box">
                     <div id="offer-box" class="carouselTicker">
                         <ul class="offer-box">

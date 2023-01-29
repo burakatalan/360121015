@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}
+    Django Project 
+{% endblock title %}
+{% block content %}
+  
+ 
+                             <div class="card justify-content-center" style="width: 90rem;">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{payment.title}}</h5>
+                                    <p class="card-text">{{payment.name}}</p>
+                                    <p class="card-text">{{payment.card_no}}</p>
+                                 <div class="odr-box">
+                                <div class="title-left">
+                                    <h3>Orders</h3>
+                                </div>
+                                <div class="rounded p-2 bg-light">
+                                {% for item in items%}
+                                    <div class="media mb-2 border-bottom">
+                                        <div class="media-body"> <a href="/product/{{item.productSlug}}"> {{item.productName}}</a>
+                                            <div class="small text-muted">{{item.productPrice}} <span class="mx-2">|</span> Qty: {{quantity}} <span class="mx-2">|</span> Subtotal: {{item.productPrice}}</div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                                    <a href="{% url 'payment' %}" class="card-link">Change</a>
+                                </div>
+                            </div>
+                       
+
+{% endblock %}

@@ -19,17 +19,18 @@
                     <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
                         <li class="nav-item active"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About Us</a></li>
+                         {% if user.is_authenticated %}
                         <li class="dropdown">
-                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                            <a href="{% url 'shop' %}" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
                             <ul class="dropdown-menu">
-								<li><a href="{% url 'shop' %}">Sidebar Shop</a></li>
-								<li><a href="{% url 'shop-detail' %}">Shop Detail</a></li>
-                                <li><a href="{% url 'cart' %}">Cart</a></li>
-                                <li><a href="{% url 'checkout' %}">Checkout</a></li>
-                                <li><a href="{% url 'my-account' %}">My Account</a></li>
+								<li><a href="{% url 'shop' %}">Shop</a></li>
                                 <li><a href="{% url 'wishlist' %}">Wishlist</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'accounts' %}">My Account</a></li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{% url 'shop' %}">Shop</a></li>
+                        {% endif %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'gallery' %}">Gallery</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'contact-us' %}">Contact Us</a></li>
                     </ul>
@@ -37,6 +38,7 @@
                 <!-- /.navbar-collapse -->
 
                 <!-- Start Atribute Navigation -->
+             </div>
                <!----> <div class="attr-nav">
                     <ul>
                         <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
@@ -48,37 +50,33 @@
 							</a>
 						</li>
                     </ul>
+                    </div>
                 </div>
                 <!-- End Atribute Navigation -->
             </div>
+        {% if user.is_authenticated %}
             <!-- Start Side Menu -->
             <div class="side">
                 <a href="#" class="close-side"><i class="fa fa-times"></i></a>
                 <li class="cart-box">
                     <ul class="cart-list">
+                    {% for item in cartObjects %}
                         <li>
-                            <a href="#" class="photo"><img src="{% static 'images/img-pro-01.jpg' %}" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Delica omtantur </a></h6>
-                            <p>1x - <span class="price">$80.00</span></p>
+                            <a href="#" class="photo"><img src="{{item.productImage.url}}" class="cart-thumb" alt="" /></a>
+                            <h6><a href="#">{{item.productName}} </a></h6>
+                            <p>1x - <span class="price">{{item.productPrice}}</span></p>
                         </li>
-                        <li>
-                            <a href="#" class="photo"><img src="{% static 'images/img-pro-02.jpg' %}" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Omnes ocurreret</a></h6>
-                            <p>1x - <span class="price">$60.00</span></p>
-                        </li>
-                        <li>
-                            <a href="#" class="photo"><img src="{% static 'images/img-pro-03.jpg' %}" class="cart-thumb" alt="" /></a>
-                            <h6><a href="#">Agam facilisis</a></h6>
-                            <p>1x - <span class="price">$40.00</span></p>
-                        </li>
+                    {% endfor %}
+                        
                         <li class="total">
                             <a href="{% url 'cart' %}" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                            <span class="float-right"><strong>Total</strong>: $180.00</span>
+                            <span class="float-right"><strong>Total</strong>:{{total}}</span>
                         </li>
                     </ul>
                 </li>
             </div>
             <!-- End Side Menu -->
+        {% endif %}
         </nav>
         <!-- End Navigation -->
     </header>

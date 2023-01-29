@@ -1,0 +1,68 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block title %}
+    Django Project Shop Detail
+{% endblock title %}
+{% block content %}
+                 <!-- Credit card form -->
+<section>
+  <div class="row justify-content-center">
+    <div class="col-md-8 mb-4">
+      <div class="card mb-4">
+        <div class="card-header py-3">
+          <h5 class="mb-0">Payment Details</h5>
+        </div>
+        <div class="card-body">
+          <form method= "POST">
+         {% csrf_token %}
+         
+          <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <input type="text" name = "title" id="formNameOnCard" class="form-control" />
+                  <label class="form-label"  for="formNameOnCard">Card Title </label>
+                </div>
+              </div>
+            <div class="row mb-4">
+              <div class="col">
+                <div class="form-outline">
+                  <input type="text" name = "name" id="formNameOnCard" class="form-control" />
+                  <label class="form-label" for="formNameOnCard">Name on card</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-outline">
+                  <input type="text" name = "card_no"id="formCardNumber" class="form-control" />
+                  <label class="form-label"  for="formCardNumber">Credit card number</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-4">
+              <div class="col-3">
+                <div class="form-outline">
+                  <input type="text" name = "expiration" id="formExpiration" class="form-control" />
+                  <label class="form-label" for="formExpiration">Expiration</label>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-outline">
+                  <input type="text" name = "cvv"  id="formCVV" class="form-control" />
+                  <label class="form-label"for="formCVV">CVV</label>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit">
+              Save Credit Cart
+            </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Credit card form -->
+    {% endblock content %}
+

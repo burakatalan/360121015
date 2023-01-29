@@ -16,11 +16,13 @@
                         </ul>
                     </div>
                 </div>
+                
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
                         <h3>Newsletter</h3>
-                        <form class="newsletter-box">
+                        <form action="{% url 'subscribe' %}" method="post" class="newsletter-box">
                             <div class="form-group">
+                            {% csrf_token %}    
                                 <input class="" type="email" name="Email" placeholder="Email Address*" />
                                 <i class="fa fa-envelope"></i>
                             </div>

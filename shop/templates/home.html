@@ -4,8 +4,10 @@
     Django Project Homepage
 {% endblock title %}
 {% block content %}
-    <link rel="stylesheet" href="{% static 'style.css' %}"/>
+    
     <!-- Start Slider -->
+
+    
     <div id="slides-shop" class="cover-slides">
         <ul class="slides-container">
             <li class="text-center">
@@ -85,30 +87,18 @@
     <div class="categories-shop">
         <div class="container">
             <div class="row">
+            {% for Category in Categories %}
+                {% if is_home is active %}
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <div class="shop-cat-box">
                         <img class="img-fluid"
-                             src="{% static 'images/categories_img_01.jpg' %}"
+                             src="{{ Category.image.url }}"
                              alt=""/>
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
+                        <a class="btn hvr-hover" href="{% url 'categoryFilter' Category.slug  %}">{{ Category.category_name }}</a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid"
-                             src="{% static 'images/categories_img_02.jpg' %}"
-                             alt=""/>
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="shop-cat-box">
-                        <img class="img-fluid"
-                             src="{% static 'images/categories_img_03.jpg' %}"
-                             alt=""/>
-                        <a class="btn hvr-hover" href="#">Lorem ipsum dolor</a>
-                    </div>
-                </div>
+                {% endif %}
+            {% endfor %}
             </div>
         </div>
     </div>
@@ -118,12 +108,16 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="offer-box-products">
+                        <a href="{% url 'shop' %}">
                         <img class="img-fluid" src="{% static 'images/add-img-01.jpg' %}" alt="" />
+                        </a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="offer-box-products">
+                        <a href="{% url 'shop' %}">
                         <img class="img-fluid" src="{% static 'images/add-img-02.jpg' %}" alt="" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -218,6 +212,12 @@
                         </div>
                     </div>
                 </div>
+                 
+                 
+
+
+
+
                 <div class="col-lg-3 col-md-6 special-grid top-featured">
                     <div class="products-single fix">
                         <div class="box-img-hover">
@@ -394,4 +394,5 @@
         </div>
     </div>
     <!-- End Blog  -->
+        
 {% endblock content %}

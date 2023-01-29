@@ -4,6 +4,7 @@
     Django Project Cart
 {% endblock title %}
 {% block content %}
+{% load mathfilters %}
 <!-- Start All Title Box -->
     <div class="all-title-box">
         <div class="container">
@@ -39,78 +40,33 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                {% for cart in Products %}
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="{{ cart.image.url }}" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									{{ cart.name }}
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>{{ cart.price }}</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>{{ cart.price }}</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
+                                {% for item in objects %}
+                                 
                                 <tr>
                                     <td class="thumbnail-img">
                                         <a href="#">
-									<img class="img-fluid" src="{% static 'images/img-pro-02.jpg' %}" alt="" />
-								</a>
+									<img class="img-fluid" src="{{item.productImage.url}}" alt="" />
+								 </a>
                                     </td>
                                     <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
+                                        <a href="/product/{{item.productSlug}}">
+									{{item.productName}}
+								</a> 
                                     </td>
                                     <td class="price-pr">
-                                        <p>$ 60.0</p>
+                                        <p>{{item.productPrice}}</p>
                                     </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
+                                    <td class="quantity-box"><input type="number" id size="4" value="{{item.quantity}}" min="0" step="1" class="c-input-text qty text"></td>
                                     <td class="total-pr">
-                                        <p>$ 80.0</p>
+                                        <p>{{item.productPrice|mul:item.quantity}}</p>
                                     </td>
                                     <td class="remove-pr">
-                                        <a href="#">
+                                        <a href="{% url 'removeCart' item.productSlug %}">
 									<i class="fas fa-times"></i>
 								</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="thumbnail-img">
-                                        <a href="#">
-									<img class="img-fluid" src="{% static 'images/img-pro-03.jpg' %}" alt="" />
-								</a>
-                                    </td>
-                                    <td class="name-pr">
-                                        <a href="#">
-									Lorem ipsum dolor sit amet
-								</a>
-                                    </td>
-                                    <td class="price-pr">
-                                        <p>$ 30.0</p>
-                                    </td>
-                                    <td class="quantity-box"><input type="number" size="4" value="1" min="0" step="1" class="c-input-text qty text"></td>
-                                    <td class="total-pr">
-                                        <p>$ 80.0</p>
-                                    </td>
-                                    <td class="remove-pr">
-                                        <a href="#">
-									<i class="fas fa-times"></i>
-								</a>
-                                    </td>
-                                </tr>
+                                
                                 {% endfor %}
                             </tbody>
                         </table>
@@ -143,7 +99,7 @@
                         <h3>Order summary</h3>
                         <div class="d-flex">
                             <h4>Sub Total</h4>
-                            <div class="ml-auto font-weight-bold"> $ 130 </div>
+                            <div class="ml-auto font-weight-bold"> {{subTotal}} </div>
                         </div>
                         <div class="d-flex">
                             <h4>Discount</h4>
@@ -156,7 +112,7 @@
                         </div>
                         <div class="d-flex">
                             <h4>Tax</h4>
-                            <div class="ml-auto font-weight-bold"> $ 2 </div>
+                            <div class="ml-auto font-weight-bold"> {{tax}} </div>
                         </div>
                         <div class="d-flex">
                             <h4>Shipping Cost</h4>
@@ -165,7 +121,7 @@
                         <hr>
                         <div class="d-flex gr-total">
                             <h5>Grand Total</h5>
-                            <div class="ml-auto h5"> $ 388 </div>
+                            <div class="ml-auto h5"> {{total}} </div>
                         </div>
                         <hr> </div>
                 </div>
@@ -175,5 +131,31 @@
         </div>
     </div>
     <!-- End Cart -->
+{% block js_files %}
+<script>
 
+$(document).ready(function(){
+ 
+$('#qtyButton').off('click').on("click", function(e){
+e.stopPropagation();
+ $.ajax({
+	method:'POST',
+	url:'#',
+	data:{
+	quantity:$('#quantity').val(),
+	csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+},  
+success: function() {
+
+
+},
+});
+return false;
+});
+
+
+});
+  
+</script>
+{% endblock %}
 {% endblock content %}
